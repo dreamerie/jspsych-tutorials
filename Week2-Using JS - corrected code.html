@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Week 2: Starting with JS</title>
+    </head>
+    <body>
+    </body>
+    <script>
+// Ctrl+/ or Command+/ to comment out code in Atom
+// Ctrl+Shift+J (on Windows) or Ctrl+Option+J (on Mac) opens the developer console on Chrome
+// https://www.w3schools.com/ is a good reference
+
+// Declaring variables
+var fave_icecream = "salted caramel"
+var worst_icecream = "mint choc chip"
+
+// prints to console
+console.log(fave_icecream)
+
+// + - * /
+var num_scoops = 3 // we have 3 scoops.
+console.log(num_scoops*2) // we have 6 scoops.
+console.log(num_scoops==3) // do we have 3 scoops?
+console.log(num_scoops>4) // do we have more than 4 scoops?
+
+if (num_scoops>2) {
+  console.log("We have so much ice cream!")
+}
+
+if (num_scoops==3) {
+  console.log("We have three scoops!")
+}
+
+// For loops. i++ is shorthand for i=i+1
+var num_cookies = 1
+
+// i = 0; i is just your counter
+// run loop for values less than 3
+//
+// i=0, i=1, i=2
+
+for (var i = 0; i < 3; i++) {
+  document.write("I ate "+num_cookies+" cookies.<p>");
+  // The document.write() method is usually only used for testing.
+  num_cookies++;
+}
+
+// For loops, #2. What's wrong with this loop?
+var num_cakes = 10
+
+//run loop four times
+for (var i = 0; i < 4; i++) {
+  var cake_text = "I ate " +num_cakes+ " cakes.<p>"
+  document.write(cake_text);
+  num_cakes++;
+}
+
+// For loops, #3. Can you make it print singular instead of plural: 1 piece?
+
+var num_sushi = 1
+
+for (var i = 0; i < 3; i++) {
+  var sushi_text = "I ate " +num_sushi+ " pieces of sushi.<p>"
+  if (num_sushi==1) {
+    var sushi_text = "I ate " +num_sushi+ " piece of sushi.<p>"
+  }
+  document.write(sushi_text)
+  num_sushi++;
+}
+
+
+// For loops, #4. A more efficient way?
+var num_choc = 1
+var text = ""
+
+for (var i = 0; i<3; i++) {
+  var chocolate_text = "I ate " +num_choc+ " chocolates.<p>"
+  if (num_choc == 1){
+    var chocolate_text = "I ate " +num_choc+ " chocolate.<p>"
+  }
+  text+=chocolate_text;
+  num_choc++;
+}
+
+document.write(text);
+
+// While loops, #1. Can you write a for-loop version?
+// Homework??
+var cupcake_price = 3.5
+var my_money = 20
+
+while (my_money > cupcake_price) {
+  my_money = my_money - cupcake_price
+  document.write("I bought a cupcake. I have $"+my_money+" dollars left.<p>")
+}
+
+// Basic arrays in Javascript
+
+var icecream_flavors = ["chocolate", "vanilla", "strawberry", "matcha", "rum raisin", fave_icecream]
+var icecream_text = ""
+
+for (var i = 0; i < icecream_flavors.length; i++) {
+  icecream_text = icecream_text + icecream_flavors[i] + "<br>"
+}
+
+document.write("<b>Ice Cream Flavors On Sale:</b><br>"+icecream_text)
+
+    </script>
+</html>

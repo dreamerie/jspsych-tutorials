@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Week 6: jsPsych basics</title>
+        <script src="jspsych-6.0.5/jspsych.js"></script>
+        <!-- Load all the plugins we will be using today -->
+        <script src="jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js"></script>
+        <script src="jspsych-6.0.5/plugins/jspsych-html-button-response.js"></script>
+        <script src="jspsych-6.0.5/plugins/jspsych-image-keyboard-response.js"></script>
+        <script src="jspsych-6.0.5/plugins/jspsych-image-button-response.js"></script>
+        <!-- Load jspsych's default CSS -->
+        <link href="jspsych-6.0.5/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+    </head>
+    <body>
+    </body>
+    <script>
+// Overview of jspsych plugins: https://www.jspsych.org/plugins/overview/
+
+/*/ Introducing the jsPsych plugin. /*/
+// Each variable defines an object that tells jspsych what to render in the browser.
+
+// Define an empty timeline array
+var timeline = [];
+
+/*/ Define the trial variables /*/
+
+var welcome = {
+    type: 'html-keyboard-response',
+    stimulus: 'Welcome to my study! Press enter to begin.',
+    choices: ['enter']
+};
+
+timeline.push(welcome)
+
+var bubble_tea = {
+    type: 'html-keyboard-response',
+    stimulus: '<p style="font-size: 40px">bubble tea</p>',
+    choices: ['e', 'i'],
+    prompt: "<p>Is this food healthy or unhealthy? Press 'e' for healthy and 'i' for unhealthy.</p>"
+};
+
+timeline.push(bubble_tea)
+
+var fixation = {
+    type: 'html-keyboard-response',
+    stimulus: '<p style="font-size: 48px;">+</p>',
+    choices: jsPsych.NO_KEYS,
+    trial_duration: 1000,
+};
+
+// 1. Can we make the bubble tea text larger?
+
+
+var bubble_tea_button = {
+    type: 'html-button-response',
+    stimulus: '<p>Bubble Tea</p>',
+    choices: ['Healthy', 'Unhealthy'],
+    prompt: "<p>Is this food healthy or unhealthy?</p>"
+};
+
+
+var puppy = {
+    type: 'image-keyboard-response',
+    stimulus: 'cutepuppy.jpg',
+    choices: ['e', 'i'],
+    prompt: "<p>Is this dog happy or sad? Press 'e' for happy and 'i' for sad.</p>",
+    response_ends_trial: true
+};
+
+var puppy_button = {
+    type: 'image-button-response',
+    stimulus: 'cutepuppy.jpg',
+    choices: ['yes','no'],
+    prompt: "<p>Is this image cute?",
+    trial_duration: 5000
+};
+
+// 2. Can we use html-keyboard-response to show the puppy and make it 50% smaller?
+
+var puppy2 = {
+  type: 'html-keyboard-response',
+  stimulus: '<img src="cutepuppy.jpg" width="50%">',
+  prompt: "Press Enter to continue.",
+  choices: ['enter']
+}
+
+
+/*/ Initialize the timeline /*/
+
+jsPsych.init({
+    timeline: timeline,
+    on_finish: function() {
+      document.write("<center>Thanks for finishing the study!</center>");
+}
+
+})
+
+/*/ Homework /*/
+
+// Choose three different plugins from https://www.jspsych.org/plugins/overview/ that we did not cover today and use them to make a mini "experiment"
+
+    </script>
+</html>

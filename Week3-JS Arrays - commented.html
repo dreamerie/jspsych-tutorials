@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Week 3: Working with JS Arrays</title>
+    </head>
+    <body>
+    </body>
+    <script>
+// Ctrl+/ or Command+/ to comment out code in Atom
+// Ctrl+Shift+J (on Windows) or Ctrl+Option+J (on Mac) opens the developer console on Chrome
+// https://www.w3schools.com/ is a good reference
+
+// Declaring variables
+var fave_icecream = "salted caramel"
+var worst_icecream = "mint choc chip"
+
+// While loops, #1. Can you write a for-loop version?
+// https://www.w3schools.com/jsref/jsref_while.asp
+var cupcake_price = 3.5
+var my_money = 20
+
+// toFixed forces # decimal places
+while (my_money > cupcake_price) {
+  my_money = my_money - cupcake_price
+  document.write("I bought a cupcake. I have $"+my_money.toFixed(2)+" left.<p>")
+}
+
+// For loop reference
+// https://www.w3schools.com/jsref/jsref_for.asp
+
+
+// WRONG for loop -- why?
+document.write("For Loop, version 1 (wrong):<p>")
+
+var my_money = 20
+//
+// i++ i = i+1
+// i+=2 i = i+2
+// i+= cupcake_price i = i + cupcake_price
+
+for (var i = 0; i < my_money; i+=cupcake_price) {
+  my_money = my_money - cupcake_price
+  document.write("I bought a cupcake. I have $"+my_money.toFixed(2)+" left.<p>")
+}
+
+// Why does this work?
+document.write("For Loop, version 2 (correct):<p>")
+
+var my_money = 20
+
+// i-=something i = i-something
+// i+=something i = i+something
+//
+// starting statement (evaluates once at the beginning); logical statement (checks after every loop); third statement +-
+
+for (var i = my_money; i > cupcake_price; i-=cupcake_price) {
+  my_money = my_money - cupcake_price
+  document.write("I bought a cupcake. I have $"+my_money.toFixed(2)+" left.<p>")
+}
+
+// Basic arrays in Javascript, pt 1
+// Javascript arrays are enclosed by square brackets.
+// Items in the array can be called by index (number)
+// Indexing starts from 0, not 1!
+
+// Array = a list of things in a fixed order.
+
+var icecream_flavors = ["chocolate", "vanilla", "strawberry", "matcha", "rum raisin", fave_icecream]
+
+first_flavor = icecream_flavors[0] // what is this ice cream?
+
+last_flavor = icecream_flavors[icecream_flavors.length-1]
+
+document.write(first_flavor+"<br>")
+
+icecream_flavors[0] = "low-sugar chocolate"
+
+document.write(icecream_flavors[0])
+
+// You can loop through the items in an array using a for loop.
+
+document.write("<p>")
+
+var icecream_text = ""
+
+for (var i = 0; i < icecream_flavors.length; i++) {
+  icecream_text = icecream_text + icecream_flavors[i] + "<br>"
+}
+
+document.write("<b>Ice Cream Flavors On Sale:</b><br>"+icecream_text)
+
+document.write("<p></p>")
+
+// Basic arrays in Javascript, pt 2
+// Intro to the for...of loop
+
+var bbt_options = ["taro milk","earl grey","brown sugar","wintermelon","cacao barry"]
+
+var bbt_text = ""
+
+for (tea of bbt_options) {
+  bbt_text+= tea+"<br>"
+}
+
+document.write("<b>Bubble Tea Shop:</b><br>"+bbt_text+ "<p>")
+
+
+// Intermediate arrays in Javascript.
+// Like Python (and unlike R), JS arrays are "mutable": they are addressed by reference, not by value.
+// Assigning a new array using = only assigns a new reference to the same object. It does not create a new object.
+// For an indepth explanation see https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0
+// also https://www.w3schools.com/js/js_object_definition.asp
+
+var new_menu = icecream_flavors
+
+// BUT What happens to icecream_flavors??
+
+var new_menu = [...icecream_flavors] // spread
+new_menu.push(worst_icecream)
+
+/*/
+Homework challenge:
+1. Add the word "milk" to each item in milk_types.
+2. By iterating (looping) over the arrays, print out all possible combinations of coffee + milk. You can use either document.write or console.log
+/*/
+
+coffee_menu = ["flat white","cappucino","latte"]
+
+milk_types = ["nonfat","2%","whole","lactose-free","soy","almond","coconut"]
+
+/*/ Bonus: intro to the object. More next week. /*/
+
+// A quick introduction to Javascript objects.
+// Objects in JavaScript can be considered an unordered collection of data, in the form of “key: value” pairs.
+taro_milk = {"name": "taro milk", "price": 5.5}
+
+// Object properties are called by name, not index
+// Add a new property to the object called "sweetness"
+taro_milk.sweetness = "medium"
+
+    </script>
+</html>

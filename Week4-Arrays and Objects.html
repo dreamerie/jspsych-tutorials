@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Week 4: Arrays and Objects</title>
+    </head>
+    <body>
+    </body>
+    <script>
+// Ctrl+/ or Command+/ to comment out code in Atom
+// https://www.w3schools.com/ is a good reference
+
+/*/ Last week's Homework /*/
+
+coffee_menu = ["flat white","cappucino","latte"]
+milk_types = ["nonfat","2%","whole","lactose-free","soy","almond","coconut"]
+
+// rename our milks
+for (var i = 0; i < milk_types.length; i++) {
+  milk_types[i] = milk_types[i] + " milk"
+}
+
+// writes line by line
+for (coffee of coffee_menu) {
+  for (milk of milk_types) {
+  console.log(coffee + " with " + milk)
+}
+}
+
+// creates a new array containing the coffees+milks
+new_coffee_menu = []
+
+for (milk of milk_types) {
+  for (coffee of coffee_menu) {
+  menu_item = coffee + " with " + milk
+  new_coffee_menu.push(menu_item)
+}
+}
+
+// console.log(new_coffee_menu)
+
+// A quick introduction to Javascript objects.
+// Objects in JavaScript can be considered an unordered collection of data, in the form of “key: value” pairs.
+// Here this object has three properties that can be referenced by name (key)
+var drink = {
+  name: "taro milk",
+  price: 5.5,
+  available: true
+}
+
+drink.name // dot notation
+drink["price"] // bracket notation
+
+// 1. Add a new property to the object called sweetness and make it medium
+
+drink.sweetness = "medium"
+drink["sweetness"] = "low"
+
+// 2. Taro milk is on sale. Decrease the price by $2.
+
+drink.price-=2
+// drink["price"]-=2
+
+// 3. Taro milk is now sold out. Change the availability to false.
+
+drink.available = false
+drink["available"] = false
+
+// We can consider the following menu as an array [] of objects.
+// An array [] is a special object that can be referenced by number, while usually object properties are referenced by name.
+
+var bbt_menu = [
+ {
+   name: "taro milk",
+   price: 5.5,
+   available: true
+ },
+ {
+   name: "earl grey",
+   price: 5,
+   available: false
+ },
+ {
+   name: "brown sugar",
+   price: 6,
+   available: true
+ },
+ {
+   name: "wintermelon",
+   price: 5.5,
+   available: true
+ },
+ {
+   name: "cacao barry",
+   price: 5,
+   available: false
+ }
+]
+
+// Using your knowledge of arrays:
+// 1. What is the first item in bbt_menu?
+
+bbt_menu[0]
+
+// 2. What is the price of the first item in bbt_menu?
+
+bbt_menu[0].price
+bbt_menu[0]["price"]
+
+// 3. Can you add a fruit tea that costs $6 to bbt_menu?
+
+bbt_menu.push({
+  name: "fruit tea",
+  price: 6,
+  available: false
+}
+)
+
+// We can consider the following menu as an object containing objects.
+// The objects in the object have to be referenced by name.
+
+var brunch_menu = {
+ breakfast: {
+    name: "breakfast special",
+    price: 10
+  },
+ coffee: {
+   name: "black coffee",
+   price: 2.5
+ },
+ sandwich: {
+   name: "club sandwich",
+   price: 5
+ },
+ cookie: {
+   name: "chocolate chip cookie",
+   price: 3
+ },
+ cake: {
+   name: "cheesecake",
+   price: 5.5
+ }
+}
+
+// How do we access the name and price of the cookie?
+
+brunch_menu.cookie.price
+brunch_menu["cookie"]["price"]
+
+// We can loop through an array using numerical indexing, or for..of, but what about objects?
+// We can use for...in
+
+for (item in brunch_menu) {
+  document.write(brunch_menu[item].name + " costs " + brunch_menu[item].price + "<p>")
+}
+
+// Why do we have to use brunch_menu[item].name instead of just item.name?
+// Because "item" in the for.. in loop returns a string, not a variable.
+// So brunch_menu["item"] becomes brunch_menu["breakfast"], brunch_menu["coffee"]
+
+brunch_keys = Object.keys(brunch_menu)
+
+// Object.values(brunch_menu)
+// Object.entries(brunch_menu)
+
+// Homework Exercises (v. short):
+// 1. Add the property of sweetness (less sweet) to each bubble tea on the menu.
+// 2. Add an item with a name and price to the brunch menu.
+
+// I also ask you to ponder some conceptual questions.
+// 1. Try using Object.keys and Object.values on an array. What happens?
+// 2. Try using for..in instead of for..of on the coffee or milk arrays. What happens?
+// 3. Fill in the blank: In JS, everything is __ _______.
+
+
+/*/ sneak peek for next week /*/
+
+// Introducing the Javascript function
+function multiplyTwoNums(num1,num2) {
+  return num1 * num2
+}
+
+multiplyTwoNums(5,10) // 50
+
+</script>
+
+</html>

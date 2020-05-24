@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Week 5: FUNCTIONS!</title>
+    </head>
+    <body>
+<p>What is your favourite fruit?</p>
+<input id="myInput" type="text">
+<button onclick="faveFruit()">Answer</button>
+<p id="answer"></p>
+    </body>
+    <script>
+// Ctrl+/ or Command+/ to comment out code in Atom
+// Ctrl+Shift+J (on Windows) or Ctrl+Option+J (on Mac) opens the developer console on Chrome
+// https://www.w3schools.com/ is a good reference
+
+/*/ Last week's Homework /*/
+
+var taro_milk = {
+  "name": "taro milk",
+  "price": 5.5,
+  "available": true
+}
+
+var bbt_menu = [
+ {
+   "name": "taro milk",
+   "price": 5.5
+ },
+ {
+   "name": "earl grey",
+   "price": 5
+ },
+ {
+   "name": "brown sugar",
+   "price": 6
+ },
+ {
+   "name": "wintermelon",
+   "price": 5.5
+ },
+ {
+   "name": "cacao barry",
+   "price": 5
+ }
+]
+
+var brunch_menu = {
+ breakfast: {
+    name: "breakfast special",
+    price: 10
+  },
+ coffee: {
+   name: "black coffee",
+   price: 2.5
+ },
+ sandwich: {
+   name: "club sandwich",
+   price: 5
+ },
+ cookie: {
+   name: "chocolate chip cookie",
+   price: 3
+ },
+ cake: {
+   name: "cheesecake",
+   price: 5.5
+ }
+}
+
+
+// 1. Add the property of sweetness (less sweet) to each bubble tea on the menu.
+
+for (bbt of bbt_menu) {
+  bbt.sweetness = "less sweet"
+}
+
+for (item in bbt_menu) {
+  bbt_menu[item].sweetness = "less sweet"
+}
+
+// 2. Add an item with a name and price to the brunch menu.
+
+brunch_menu.tea = {
+  name: "chai tea",
+  price: 4
+}
+
+// 1. Try using Object.keys and Object.values on an array. What happens?
+"Answer: Object.keys returns the index numbers: 0, 1, 2 etc. Object.values returns the actual values in the array."
+
+// 2. Try using for..in instead of for..of on the coffee or milk arrays. What happens?
+"Answer: the numerical indexes are printed instead of the values in the arrays."
+
+// 3. Fill in the blank: In JS, everything is __ _______.
+"Answer: an object! You should now see that an array is a special kind of object."
+
+"Recall that for any object we can access values with object['keyname']. In arrays the keyname happens to be a number."
+
+// Even a string can be accessed like an object (like an array with numerical indexes):
+"string"[0] //s
+"string".length //6
+
+/*/ Introducing the Javascript function /*/
+
+// Some super basic functions
+
+function squareNum(num) {
+  return num * num
+}
+
+function multiplyTwoNum(num1,num2) {
+  document.write("Math is hard.")
+  return num1 * num2
+}
+
+// What does this function do?
+function printKeys(obj) {
+  theseKeys = Object.keys(obj)
+  for (key of theseKeys) {
+      console.log(key)
+    }
+}
+
+// Variables declared within a JavaScript function, become LOCAL to the function. Local variables can only be accessed from within the function.
+
+// Objects can include functions!
+// While object data are called properties, object functions are called methods.
+// Here we add a method to the taro_milk object:
+taro_milk.information =  function() {
+  return this.name + " costs $" + this.price
+}
+
+// What is "this"? In an object method, the "this" keyword refers to the current object.
+
+// Add a function to each object in the bbt_menu array that reads out price
+
+for (bbt of bbt_menu) {
+  bbt.information =  function() {
+    return this.name + " costs $" + this.price +" and is "+ this.sweetness
+  }
+}
+
+bbt.information() // don't do this because it uses the last value of bbt.
+
+bbt_menu[0].information() // first item in array.
+
+// Can you now print out each drink's information from the menu?
+
+for (bbt of bbt_menu){
+  console.log(bbt.information())
+}
+
+// Can we add a method to each item in our brunch_menu that gives the name and price?
+
+for (item in brunch_menu) {
+  brunch_menu[item].information =  function() {
+    return this.name + " costs $" + this.price
+  } // what is this?
+}
+
+// This is brunch_menu[item] (parent object of function)
+
+/*/ Next week we will begin using the jsPsych library to make experiments. /*/
+
+/*/ Bonus: the switch statement in JS can replace multiple if statements. /*/
+
+function faveFruit() {
+  var text = "" // empty text
+  var fruit = document.getElementById("myInput").value // get input from user
+  fruit = fruit.toLowerCase() // convert to lowercase
+
+  // use switch to describe different cases
+  switch(fruit) {
+    case "peach":
+    text = "Peaches are my favorite too!"
+    break
+    case "cherry":
+    text = "Cherries are delicious!"
+    break
+    case "orange":
+    case "grapefruit":
+    text = "Literally the WORST fruit ever."
+    break
+    case "apple":
+    case "banana":
+    case "pear":
+    text = "Basic, but good."
+    break
+    default:
+    text = "I'm not too sure about that one.."
+  }
+  document.getElementById("answer").innerHTML = text // replace the answer text in our HTML
+}
+
+
+    </script>
+</html>
