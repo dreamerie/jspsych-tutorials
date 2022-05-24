@@ -2,30 +2,37 @@
 <html>
     <head>
         <title>Week 6: jsPsych basics</title>
-        <script src="jspsych-6.0.5/jspsych.js"></script>
+        <!-- Load JS psych -->
+        <script src="jspsych-7.2/jspsych.js"></script>
+
         <!-- Load all the plugins we will be using today -->
-        <script src="jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js"></script>
-        <script src="jspsych-6.0.5/plugins/jspsych-html-button-response.js"></script>
-        <script src="jspsych-6.0.5/plugins/jspsych-image-keyboard-response.js"></script>
-        <script src="jspsych-6.0.5/plugins/jspsych-image-button-response.js"></script>
+        <script src="jspsych-7.2/plugin-html-keyboard-response.js"></script>
+        <script src="jspsych-7.2/plugin-html-button-response.js"></script>
+        <script src="jspsych-7.2/plugin-image-keyboard-response.js"></script>
+        <script src="jspsych-7.2/plugin-image-button-response.js"></script>
+
         <!-- Load jspsych's default CSS -->
-        <link href="jspsych-6.0.5/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+        <link href="jspsych-7.2/jspsych.css" rel="stylesheet" type="text/css"></link>
+
     </head>
     <body>
     </body>
     <script>
-// Overview of jspsych plugins: https://www.jspsych.org/plugins/overview/
 
-/*/ Introducing the jsPsych plugin. /*/
-// Each variable defines an object that tells jspsych what to render in the browser.
+// First we have to initialize jsPsych. We can do this using the initJsPsych() function, and saving the result to a variable called jsPsych.
+
+var jsPsych = initJsPsych();
 
 // Define an empty timeline array
 var timeline = [];
 
+/*/ Introducing the jsPsych plugin. /*/
+// Each variable defines an object that tells jspsych what to render in the browser.
+
 /*/ Define the trial variables /*/
 
 var welcome = {
-    type: 'html-keyboard-response',
+    type: jsPsychHtmlKeyboardResponse,
     stimulus: 'Welcome to my study! Press enter to begin.',
     choices: ['enter']
 };
@@ -33,7 +40,7 @@ var welcome = {
 timeline.push(welcome)
 
 var bubble_tea = {
-    type: 'html-keyboard-response',
+    type: jsPsychHtmlKeyboardResponse,
     stimulus: '<p style="font-size: 40px">bubble tea</p>',
     choices: ['e', 'i'],
     prompt: "<p>Is this food healthy or unhealthy? Press 'e' for healthy and 'i' for unhealthy.</p>"
@@ -42,9 +49,9 @@ var bubble_tea = {
 timeline.push(bubble_tea)
 
 var fixation = {
-    type: 'html-keyboard-response',
+    type: jsPsychHtmlKeyboardResponse,
     stimulus: '<p style="font-size: 48px;">+</p>',
-    choices: jsPsych.NO_KEYS,
+    choices: 'NO_KEYS',
     trial_duration: 1000,
 };
 
@@ -52,7 +59,7 @@ var fixation = {
 
 
 var bubble_tea_button = {
-    type: 'html-button-response',
+    type: jsPsychHtmlKeyboardResponse,
     stimulus: '<p>Bubble Tea</p>',
     choices: ['Healthy', 'Unhealthy'],
     prompt: "<p>Is this food healthy or unhealthy?</p>"
@@ -60,7 +67,7 @@ var bubble_tea_button = {
 
 
 var puppy = {
-    type: 'image-keyboard-response',
+    type: jsPsychImageKeyboardResponse,
     stimulus: 'cutepuppy.jpg',
     choices: ['e', 'i'],
     prompt: "<p>Is this dog happy or sad? Press 'e' for happy and 'i' for sad.</p>",
@@ -68,7 +75,7 @@ var puppy = {
 };
 
 var puppy_button = {
-    type: 'image-button-response',
+    type: jsPsychImageButtonResponse,
     stimulus: 'cutepuppy.jpg',
     choices: ['yes','no'],
     prompt: "<p>Is this image cute?",
@@ -78,22 +85,16 @@ var puppy_button = {
 // 2. Can we use html-keyboard-response to show the puppy and make it 50% smaller?
 
 var puppy2 = {
-  type: 'html-keyboard-response',
+  type: jsPsychImageKeyboardResponse,
   stimulus: '<img src="cutepuppy.jpg" width="50%">',
   prompt: "Press Enter to continue.",
   choices: ['enter']
 }
 
 
-/*/ Initialize the timeline /*/
+/*/ Run the timeline /*/
 
-jsPsych.init({
-    timeline: timeline,
-    on_finish: function() {
-      document.write("<center>Thanks for finishing the study!</center>");
-}
-
-})
+jsPsych.run(timeline);
 
 /*/ Homework /*/
 

@@ -1,28 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>My first JS experiment</title>
-        <script src="jspsych-6.0.5/jspsych.js"></script>
-        <script src="jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js"></script>
-        <link href="jspsych-6.0.5/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+        <title>Week 1: My first JS experiment</title>
+        <script src="jspsych-7.2/jspsych.js"></script>
+        <script src="jspsych-7.2/plugin-html-keyboard-response.js"></script>
+        <link href="jspsych-7.2/jspsych.css" rel="stylesheet" type="text/css"></link>
     </head>
     <body>
     </body>
     <script>
 
-    // // Week 1: hello world
-    //
-    // let hello_trial = {
-    //     type: 'html-keyboard-response',
-    //     stimulus: 'Hello world!'
-    // }
-    //
-    // jsPsych.init({
-    //     timeline: [hello_trial]
-    // })
+    // Week 1: hello world
 
- // also cover: console-F12, cmd+opt+j
- // Ctrl+/ or Command+/ to comment out code
+    var jsPsych = initJsPsych();
+
+    var hello_trial = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: 'Hello world!'
+    }
+
+    jsPsych.run([hello_trial]);
+
+
+ // In your browser: console-F12, cmd+opt+j opens the console
+ // In your source code editor: Ctrl+/ or Command+/ to comment out code
 
     </script>
 </html>
