@@ -2,28 +2,43 @@
 <html>
     <head>
         <title>Week 9: Dynamic Trials Pt3</title>
-        <script src="jspsych-6.0.5/jspsych.js"></script>
+        <!-- Load JS psych -->
+        <script src="jspsych-7.2/jspsych.js"></script>
+
         <!-- Load all the plugins we will be using today -->
-        <script src="jspsych-6.0.5/plugins/jspsych-instructions.js"></script>
-        <script src="jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js"></script>
-        <script src="jspsych-6.0.5/plugins/jspsych-html-button-response.js"></script>
+        <script src="jspsych-7.2/plugin-html-keyboard-response.js"></script>
+        <script src="jspsych-7.2/plugin-html-button-response.js"></script>
+
         <!-- Load jspsych's default CSS -->
-        <link href="jspsych-6.0.5/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+        <link href="jspsych-7.2/jspsych.css" rel="stylesheet" type="text/css"></link>
     </head>
     <body>
     </body>
     <script>
 // Overview of jspsych plugins: https://www.jspsych.org/plugins/overview/
 
+// Overview of jspsych plugins: https://www.jspsych.org/plugins/overview/
+
+// Initialize jsPsych
+
+var jsPsych = initJsPsych({
+  on_finish: function() {
+    jsPsych.data.displayData(); // let's see the data in json format
+    jsPsych.data.get().localSave('csv','mydata.csv'); // save the data in csv format in a file called 'mydata.csv' (format, filename)
+  }
+});
+
 // Define an empty timeline array
+
 var timeline = [];
 
 /*/ Define the trial variables /*/
 var welcome = {
-    type: 'html-keyboard-response',
-    stimulus: "Welcome to the study!<p>Please choose the correct category (dog or cat) for each animal.<p>"+
-    "Please try to respond as quickly as possible without sacrificing accuracy.<p>"+
-    "<p>Press ENTER to begin.",
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `Welcome to the study!<p>
+    Please choose the correct category (dog or cat) for each animal.<p>
+    Please try to respond as quickly as possible without sacrificing accuracy.<p>
+    <p>Press ENTER to begin.`,
     choices: ['enter']
 };
 
@@ -39,21 +54,19 @@ var animals = jsPsych.randomization.shuffle(animals)
 
 // Show an image of a cat or a dog, with response buttons.
 var catdog = {
-    type: 'html-button-response',
+  type: jsPsychHtmlButtonResponse,
     stimulus: function() {
       current_animal = animals[count]
       // count++
-      return '<img src = "'+ current_animal + '" width=200px></p>'
+      return `<img src = ${current_animal} width=200px></p>`
     },
     choices: ['Cat','Dog'],
-    trial_duration: function() {
-      return timeLimit
-    },
+    trial_duration: timeLimit
 };
 
 // Change the feedback stimulus parameter so it says "Correct" or "Wrong" depending on whether the answer was correct or not.
 var feedback3 = {
-    type: 'html-keyboard-response',
+  type: jsPsychHtmlKeyboardResponse,
     stimulus: function() {
       // the shown animal
         shown = "dog"
@@ -61,7 +74,7 @@ var feedback3 = {
         shown = "cat"
       }
       // the chosen animal
-      button_pressed = jsPsych.data.getLastTrialData().values()[0].button_pressed
+      button_pressed = jsPsych.data.getLastTrialData().values()[0].response
       if (button_pressed==0) {
         chosen = "cat"
       } else if (button_pressed==1) {
@@ -78,7 +91,7 @@ var feedback3 = {
         return "Wrong!"
       }
     },
-    choices: jsPsych.NO_KEYS,
+    choices: "NO_KEYS",
     trial_duration: 1000,
     on_finish: function(data) {
       data.shown = shown;
@@ -110,15 +123,9 @@ for (i=0; i < animals.length; i++) {
 }
 
 
-/*/ Initialize the timeline /*/
+/*/ Run the timeline /*/
+jsPsych.run(timeline);
 
-jsPsych.init({
-    timeline: timeline, // load our completed timeline
-    preload_images: animals, // load images before the experiment starts
-    on_finish: function() {
-      jsPsych.data.displayData('csv') // view data in csv format
-    }
-})
 
     </script>
 </html>

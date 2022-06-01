@@ -2,14 +2,16 @@
 <html>
     <head>
         <title>Week 7: Dynamic Trials</title>
-        <script src="jspsych-6.0.5/jspsych.js"></script>
+        <!-- Load JS psych -->
+        <script src="jspsych-7.2/jspsych.js"></script>
+
         <!-- Load all the plugins we will be using today -->
-        <script src="jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js"></script>
-        <script src="jspsych-6.0.5/plugins/jspsych-html-button-response.js"></script>
-        <script src="jspsych-6.0.5/plugins/jspsych-image-keyboard-response.js"></script>
-        <script src="jspsych-6.0.5/plugins/jspsych-image-button-response.js"></script>
+        <script src="jspsych-7.2/plugin-html-keyboard-response.js"></script>
+        <script src="jspsych-7.2/plugin-html-button-response.js"></script>
+
         <!-- Load jspsych's default CSS -->
-        <link href="jspsych-6.0.5/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+        <link href="jspsych-7.2/jspsych.css" rel="stylesheet" type="text/css"></link>
+
     </head>
     <body>
     </body>
@@ -20,26 +22,34 @@
 
 // Choose three different plugins that we did not cover and use them to make a mini "experiment"
 
+// First we have to initialize jsPsych. We can do this using the initJsPsych() function, and saving the result to a variable called jsPsych.
+
+var jsPsych = initJsPsych();
+
 // Define an empty timeline array
 var timeline = [];
-
 
 /*/ Define the trial variables /*/
 
 var welcome = {
-    type: 'html-keyboard-response',
+    type: jsPsychHtmlKeyboardResponse,
     stimulus: 'Welcome to my study!<p> We are interested in your tea preferences.<p> Press enter to begin.',
     choices: ['enter']
 };
 
 var fixation = {
-    type: 'html-keyboard-response',
-    stimulus: '<p style="font-size: 40px;">+</p>',
-    choices: jsPsych.NO_KEYS,
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: '<p style="font-size: 30px;">+</p>',
+    choices: "NO_KEYS",
     trial_duration: 1000,
 };
 
 timeline.push(welcome)
+
+// Problem:
+
+// A Python script runs essentially in sequence; when one line of code is called the script waits for that line to finish and then the next lines begins. JavaScript is designed to be asynchronous; all parts of your web page should load at once.
+
 
 // Initialize counter variable
 var count = 0
@@ -49,16 +59,14 @@ var timeLimit = 5000
 var bbt_options = ["taro milk","earl grey","brown sugar","wintermelon","cacao barry"]
 
 var bubble_tea = {
-    type: 'html-button-response',
+    type: jsPsychHtmlButtonResponse,
     stimulus: function() {
       current_tea = bbt_options[count]
       count++
-      return current_tea
+      return current_tea+'<p>'
     },
     choices: ['Like', 'Neutral','Dislike'],
-    trial_duration: function() {
-      return timeLimit
-    },
+    trial_duration: timeLimit // why doesn't this need to be wrapped in a function?
 };
 
 
@@ -69,20 +77,11 @@ for (i=0; i < bbt_options.length; i++) {
   timeline.push(fixation)
 }
 
-// Problem:
-
-// A Python script runs essentially in sequence; when one line of code is called the script waits for that line to finish and then the next lines begins. JavaScript is designed to be asynchronous; all parts of your web page should load at once.
-
 // Can we make the bbt text bigger?
 
-/*/ Initialize the timeline /*/
+/*/ Run the timeline /*/
 
-jsPsych.init({
-    timeline: timeline,
-    on_finish: function() {
-      document.write("<center>Thanks for finishing the study!</center>");
-}
-})
+jsPsych.run(timeline);
 
     </script>
 </html>

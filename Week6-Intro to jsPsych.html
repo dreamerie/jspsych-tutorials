@@ -37,8 +37,6 @@ var welcome = {
     choices: ['enter']
 };
 
-timeline.push(welcome)
-
 var bubble_tea = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: '<p style="font-size: 40px">bubble tea</p>',
@@ -46,7 +44,6 @@ var bubble_tea = {
     prompt: "<p>Is this food healthy or unhealthy? Press 'e' for healthy and 'i' for unhealthy.</p>"
 };
 
-timeline.push(bubble_tea)
 
 var fixation = {
     type: jsPsychHtmlKeyboardResponse,
@@ -55,11 +52,14 @@ var fixation = {
     trial_duration: 1000,
 };
 
+
+timeline.push(welcome,bubble_tea)
+
 // 1. Can we make the bubble tea text larger?
 
 
 var bubble_tea_button = {
-    type: jsPsychHtmlKeyboardResponse,
+    type: jsPsychHtmlButtonResponse,
     stimulus: '<p>Bubble Tea</p>',
     choices: ['Healthy', 'Unhealthy'],
     prompt: "<p>Is this food healthy or unhealthy?</p>"
@@ -77,20 +77,23 @@ var puppy = {
 var puppy_button = {
     type: jsPsychImageButtonResponse,
     stimulus: 'cutepuppy.jpg',
-    choices: ['yes','no'],
+    choices: ['Yes','Heck Yes','No'],
     prompt: "<p>Is this image cute?",
     trial_duration: 5000
 };
 
+timeline.push(bubble_tea_button,puppy,puppy_button)
+
 // 2. Can we use html-keyboard-response to show the puppy and make it 50% smaller?
 
 var puppy2 = {
-  type: jsPsychImageKeyboardResponse,
+  type: jsPsychHtmlKeyboardResponse,
   stimulus: '<img src="cutepuppy.jpg" width="50%">',
   prompt: "Press Enter to continue.",
   choices: ['enter']
 }
 
+timeline.push(puppy2)
 
 /*/ Run the timeline /*/
 
