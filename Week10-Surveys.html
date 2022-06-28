@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Week 10: Surveys</title>
+        <!-- Load JS psych -->
+        <script src="jspsych-7.2/jspsych.js"></script>
+
+        <!-- Load all the plugins we will be using today -->
+        <script src="jspsych-7.2/plugin-html-keyboard-response.js"></script>
+        <script src="jspsych-7.2/plugin-html-button-response.js"></script>
+        <script src="jspsych-7.2/plugin-survey.js"></script>
+
+        <script src="jspsych-7.2/plugin-survey-likert.js"></script>
+        <script src="jspsych-7.2/plugin-survey-html-form.js"></script>
+        <script src="jspsych-7.2/plugin-survey-multi-choice.js"></script>
+        <script src="jspsych-7.2/plugin-survey-text.js"></script>
+
+
+        <!-- Load jspsych's default CSS -->
+        <link href="jspsych-7.2/jspsych.css" rel="stylesheet" type="text/css"></link>
+    </head>
+    <body>
+    </body>
+    <script>
+// Overview of jspsych plugins: https://www.jspsych.org/plugins/overview/
+
+// A foreword:
+// 90% of the time you will not know how to do a programming thing.
+// Maybe you forgot it or never knew it.
+// The more important skill is knowing how to search for the solution..
+
+
+// Initialize jsPsych
+
+var jsPsych = initJsPsych({
+  on_finish: function() {
+    jsPsych.data.displayData();
+  }
+});
+// Define an empty timeline array
+
+var timeline = [];
+
+/*/ Define the trial variables /*/
+
+var welcome = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `Welcome to the study!<p>
+    We would like you to answer a few simple questions.<p>
+    <p>Press ENTER to begin.`,
+    choices: ['enter']
+};
+
+timeline.push(welcome)
+
+// Initialize counter variable
+var count = 0
+var timeLimit = 5000
+
+// Demographics
+  var gender = {
+    type: jsPsychSurveyMultiChoice,
+    questions: [{prompt: "What is your gender?", name: "gender",required: true, options: ["Man","Woman","Other","I prefer not to say"]}],
+    on_finish: function () {
+      gender_obj = jsPsych.data.get().last(1).values()[0].response
+      subject_gender = gender_obj['gender']
+      jsPsych.data.addDataToLastTrial({gender: subject_gender})
+    }
+  };
+
+  var age = {
+    type: jsPsychSurveyText,
+    questions: [{prompt: "What is your age in years?", name: "age", placeholder: 25,required: true}],
+    on_finish: function () {
+      age_obj = jsPsych.data.get().last(1).values()[0].response
+      subject_age = age_obj['age']
+      jsPsych.data.addDataToLastTrial({age: subject_age})
+    }
+  };
+
+  timeline.push(gender,age)
+
+  var cat_dog_text = `
+  Please rate how much you like the following animals on the scales below.
+  `
+
+  var rating_scale = [
+    "0 (Not At All)","1","2","3","4","5","6","7","8","9","10 (Extremely Much)"
+  ];
+
+
+  const survey_qn = {
+    prompt: "prompt",
+    name: "name",
+    labels: rating_scale,
+    required: true
+  };
+
+  const qn_1 = Object.create(survey_qn);
+  const qn_2 = Object.create(survey_qn);
+
+  cat_dog_array = ["cats","dogs"]
+
+  qn_1.prompt = cat_dog_array[0];  qn_1.name = cat_dog_array[0];
+  qn_2.prompt = cat_dog_array[1];  qn_2.name = cat_dog_array[1];
+
+  // Show an image of a cat or a dog, with response buttons.
+  var cat_dog_qn = {
+    type: jsPsychSurveyLikert,
+    preamble: function() {
+      return '<div style="width:850px;">'+cat_dog_text+'</div>'
+    },
+    questions: function () {
+      return [qn_1,   qn_2 ]
+    },
+    randomize_question_order: true,
+    on_finish: function(data) {
+      prediction_obj = jsPsych.data.get().last(1).values()[0].response
+      cat_prediction = prediction_obj['cats']
+      dog_prediction = prediction_obj['dogs']
+
+      qn_order = jsPsych.data.get().last(1).values()[0].question_order
+
+      jsPsych.data.addDataToLastTrial({
+        cat_prediction: cat_prediction,
+        dog_prediction: dog_prediction,
+        order: qn_order[0]
+    })
+  }
+  }
+
+  timeline.push(cat_dog_qn)
+
+
+
+/*/ Run the timeline /*/
+jsPsych.run(timeline);
+
+    </script>
+</html>
